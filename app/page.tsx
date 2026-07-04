@@ -17,6 +17,19 @@ export default function Home() {
   const generateLottoNumbers = () => {
     console.log("Generating lotto numbers(로또번호 생성중)...");
     setIsAnimating(true);
+
+    const newNumbers = [];
+
+    for (let i = 0; i < count; i++) {
+      const lottoSet = new Set<number>();
+      while (lottoSet.size < 7) {
+        // const randomNum = Math.floor(Math.random() * 45) + 1;
+        // lottoSet.add(randomNum);
+        lottoSet.add(Math.floor(Math.random() * 45) + 1);
+      }
+      newNumbers.push(Array.from(lottoSet).sort((a, b) => a - b));
+    }
+    setNumbers(newNumbers);
   };
 
   return (
@@ -82,7 +95,6 @@ export default function Home() {
           >
             <div className="flex justify-center mb-4 h-40">
               <motion.div
-                className="w-4 h-4 bg-indigo-600 rounded-full mx-1"
                 animate={{
                   rotate: [0, 360],
                   scale: [1, 1.5, 1],
@@ -93,6 +105,7 @@ export default function Home() {
                   ease: "linear",
                   delay: 0,
                 }}
+                className="w-20 h-20 bg-blue-500 rounded-full"
               />
             </div>
 
@@ -103,58 +116,63 @@ export default function Home() {
           </motion.div>
         ) : (
           <div>
-            {numbers.map((numberSet, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="bg-gray-800 rounded-lg p-4 shadow-lg
-                        flex justify-center space-x-2 mb-4"
-              >
-                <div className="flex flex-wrap justify-center gap-2">
-                  {numberSet.slice(0, 6).map((num, i) => {
-                    return (
-                      <motion.div
-                        key={i}
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        transition={{
-                          type: "spring",
-                          stiffness: 260,
-                          damping: 20,
-                          delay: i * 0.1,
-                        }}
-                        className="w-10 h-10 rounded-full 
+            {numbers.map((numberSet, index) => {
+              return (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 50 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className="bg-gray-800 rounded-lg p-4 shadow-lg
+                         mb-4"
+                >
+                  <div className="flex flex-wrap justify-center gap-2">
+                    {numberSet.slice(0, 6).map((num, i) => {
+                      return (
+                        <motion.div
+                          key={i}
+                          initial={{ scale: 0 }}
+                          animate={{ scale: 1 }}
+                          transition={{
+                            type: "spring",
+                            stiffness: 260,
+                            damping: 20,
+                            delay: i * 0.1,
+                          }}
+                          className="w-10 h-10 rounded-full 
                       flex items-center justify-center text-white
                        font-bold text-lg bg-blue-500"
-                      >
-                        {num}
-                      </motion.div>
-                    );
-                  })}
-                  <span className="flex items-center text-gray-400 mx-1">
-                    +
-                  </span>
-                  <motion.div
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    transition={{
-                      type: "spring",
-                      stiffness: 260,
-                      damping: 20,
-                      delay: 0.6,
-                    }}
-                    className="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-lg bg-red-500"
-                  >
-                    {numberSet[6]}
-                  </motion.div>
-                </div>
-                <p className="text-center text-gray-400 mt-2">
-                  LottoNumber(당첨번호)
-                </p>
-              </motion.div>
-            ))}
+                        >
+                          {num}
+                        </motion.div>
+                      );
+                    })}
+                    <span className="flex items-center text-gray-400 mx-1">
+                      +
+                    </span>
+                    <motion.div
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 260,
+                        damping: 20,
+                        delay: 0.6,
+                      }}
+                      className="w-10 h-10 rounded-full flex 
+                      items-center justify-center 
+                      text-white font-bold text-lg
+                       bg-red-500"
+                    >
+                      {numberSet[6]}
+                    </motion.div>
+                  </div>
+                  <p className="text-center text-gray-400 mt-2">
+                    LottoNumber(당첨번호)
+                  </p>
+                </motion.div>
+              ); // end of return
+            })}
           </div>
         )}
       </div>
