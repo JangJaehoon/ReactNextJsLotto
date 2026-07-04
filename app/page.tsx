@@ -22,7 +22,7 @@ export default function Home() {
   return (
     <div
       className="min-h-screen bg-gray-900 p-4 sm:p-8 flex flex-col 
-  items-center justify-center"
+      items-center justify-center"
     >
       {/* 로또 번호 생성기 */}
 
