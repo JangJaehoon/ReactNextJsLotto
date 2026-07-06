@@ -257,10 +257,11 @@ export default function Home() {
                             damping: 20,
                             delay: i * 0.1,
                           }}
-                          className="w-10 h-10 rounded-full 
+                          className={`w-10 h-10 rounded-full 
                       flex items-center justify-center text-white
                        font-bold text-lg bg-blue-500
-                        ${getBackgroundColor(num)}"
+                        ${getBackgroundColor(num)}
+                          `}
                         >
                           {num}
                         </motion.div>
@@ -278,12 +279,12 @@ export default function Home() {
                         damping: 20,
                         delay: 0.6,
                       }}
-                      className="w-10 h-10 rounded-full flex 
+                      className={`w-10 h-10 rounded-full flex 
                       items-center justify-center 
                       text-white font-bold text-lg
                        bg-blue-500
                        ${getBackgroundColor(numberSet[6])}
-                       "
+                       `}
                     >
                       {numberSet[6]}
                     </motion.div>
