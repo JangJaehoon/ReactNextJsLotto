@@ -185,8 +185,8 @@ export default function Home() {
             max="10"
             value={count}
             onChange={(e) => setCount(parseInt(e.target.value))}
-            className="shadow appearance-none 
-          border bg-gray-700 border-gray-600 rounded          
+            className="shadow appearance-none border
+           bg-gray-700 border-gray-600 rounded          
           w-full px-3 py-2 text-gray-200 leading-tight mr-2           
           focus:outline-none "
           />
@@ -209,7 +209,7 @@ export default function Home() {
             initial={{ opacity: 0, scale: 0.5 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5 }}
-            className="bg-gray-800 rounded-lg p-4 sm:p-6 shadow-lg　mb-4 text-center"
+            className="bg-gray-800 rounded-lg p-4 sm:p-6 shadow-lg mb-4 text-center"
           >
             <div className="flex justify-center items-center mb-4 h-40">
               <motion.div
@@ -259,7 +259,8 @@ export default function Home() {
                           }}
                           className="w-10 h-10 rounded-full 
                       flex items-center justify-center text-white
-                       font-bold text-lg bg-blue-500　 ${getBackgroundColor(num)}"
+                       font-bold text-lg bg-blue-500
+                        ${getBackgroundColor(num)}"
                         >
                           {num}
                         </motion.div>
@@ -280,7 +281,7 @@ export default function Home() {
                       className="w-10 h-10 rounded-full flex 
                       items-center justify-center 
                       text-white font-bold text-lg
-                       bg-red-500
+                       bg-blue-500
                        ${getBackgroundColor(numberSet[6])}
                        "
                     >
