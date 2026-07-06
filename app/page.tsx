@@ -15,19 +15,19 @@ export default function Home() {
   const [dots, setDots] = useState("...");
 
   const generateLottoNumbers = () => {
-    console.log("Generating lotto numbers(로또번호 생성중)...");
-    setIsAnimating(true);
+    // console.log("Generating lotto numbers(로또번호 생성중)...");
+    // setIsAnimating(true);
 
     const newNumbers = [];
 
     for (let i = 0; i < count; i++) {
-      const lottoSet = new Set<number>();
-      while (lottoSet.size < 7) {
+      const set = new Set<number>();
+      while (set.size < 7) {
         // const randomNum = Math.floor(Math.random() * 45) + 1;
         // lottoSet.add(randomNum);
-        lottoSet.add(Math.floor(Math.random() * 45) + 1);
+        set.add(Math.floor(Math.random() * 45) + 1);
       }
-      newNumbers.push(Array.from(lottoSet).sort((a, b) => a - b));
+      newNumbers.push(Array.from(set).sort((a, b) => a - b));
     }
     setNumbers(newNumbers);
   };
@@ -43,33 +43,32 @@ export default function Home() {
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="text-2xl sm:text-4xl font-bold
-         text-gray-100 mb-4 sm:mb-8 text-center"
+        className="text-2xl sm:text-4xl font-bold text-gray-100 mb-4 sm:mb-8 text-center"
       >
         Lotto Number Generator(로또 번호 생성기)
       </motion.h1>
+
       {/* 로또 번호 세트 수 선택 */}
       <motion.div
         initial={{ opacity: 0, scale: 0.5 }}
         animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.5, delay: 0.2 }}
-        className="bg-gray-800 rounded-lg p-4 sm:p-6 
-      shadow-lg mb-4 sm:mb-8 w-full max-w-md"
+        transition={{ duration: 0.5 }}
+        className="bg-gray-800 rounded-lg p-4 sm:p-6 shadow-lg mb-4 sm:mb-8 w-full max-w-md"
       >
-        <label className="block text-sm font-medium text-gray-300 mb-2">
+        <label className="block text-gray-300 text-sm font-bold mb-2">
           Lotto Number of Sets(생성할 로또 번호 세트 수):
         </label>
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center">
           <input
             type="number"
-            min={1}
-            max={10}
+            min="1"
+            max="10"
             value={count}
             onChange={(e) => setCount(parseInt(e.target.value))}
             className="shadow appearance-none 
           border bg-gray-700 border-gray-600 rounded          
-          w-full px-3 py-2 text-gray-100 leading-tight mr-2           
-          focus:outline-none focus:ring-2 focus:ring-blue-500"
+          w-full px-3 py-2 text-gray-200 leading-tight mr-2           
+          focus:outline-none "
           />
           <motion.button
             whileHover={{ scale: 1.05 }}
@@ -77,8 +76,7 @@ export default function Home() {
             onClick={generateLottoNumbers}
             className="bg-indigo-600 hover:bg-indigo-700
            text-white font-bold 
-          py-2 px-4 rounded focus:outline-none focus:ring-2 
-          focus:ring-blue-500"
+          py-2 px-4 rounded whitespace-nowrap"
           >
             Generate(생성)
           </motion.button>
