@@ -49,10 +49,15 @@ export default function Home() {
   const [count, setCount] = useState(1);
   const [numbers, setNumbers] = useState<number[][]>([]);
   const [isAnimating, setIsAnimating] = useState(false);
-  const [loadingPhrase, setLoadingPhrase] = useState(
-    "Generating lotto numbers(로또번호 생성중)...",
-  );
-  const [dots, setDots] = useState("...");
+  // const [loadingPhrase, setLoadingPhrase] = useState(
+  //   "Generating lotto numbers(로또번호 생성중)...",
+  // );
+
+  const [loadingPhrase, setLoadingPhrase] = useState("");
+
+  // const [dots, setDots] = useState("...");
+
+  const [dots, setDots] = useState("");
 
   const generateLottoNumbers = () => {
     // console.log("Generating lotto numbers(로또번호 생성중)...");
@@ -62,6 +67,9 @@ export default function Home() {
     setLoadingPhrase(
       loadingPhrases[Math.floor(Math.random() * loadingPhrases.length)],
     );
+
+    // 초기 dots 설정
+    setDots("");
 
     const animationDuration = Math.random() * 2000 + 1000;
     // 1초 ~ 3초 사이의 랜덤 애니메이션 지속 시간
@@ -101,6 +109,46 @@ export default function Home() {
     };
   }, [isAnimating]);
 
+  useEffect(() => {
+    let dotsInterval: NodeJS.Timeout;
+
+    // 0.5초마다 dots 추가
+    if (isAnimating) {
+      dotsInterval = setInterval(() => {
+        setDots((prevDots) => {
+          if (prevDots.length < 3) {
+            return prevDots + ".";
+          }
+
+          return "";
+        });
+      }, 500);
+    }
+
+    return () => {
+      clearInterval(dotsInterval);
+    };
+  }, [isAnimating]);
+
+  const getBackgroundColor = (num: number) => {
+    if (num <= 9) {
+      return "bg-yellow-500";
+    }
+    if (num <= 19) {
+      return "bg-blue-400";
+    }
+
+    if (num <= 29) {
+      return "bg-red-400";
+    }
+
+    if (num <= 39) {
+      return "bg-gray-400";
+    }
+
+    return "bg-green-500";
+  };
+
   return (
     <div
       className="min-h-screen bg-gray-900 p-4 sm:p-8 flex flex-col 
@@ -129,6 +177,7 @@ export default function Home() {
         <label className="block text-gray-300 text-sm font-bold mb-2">
           Lotto Number of Sets(생성할 로또 번호 세트 수):
         </label>
+
         <div className="flex items-center">
           <input
             type="number"
@@ -160,7 +209,7 @@ export default function Home() {
             initial={{ opacity: 0, scale: 0.5 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5 }}
-            className="bg-gray-800 rounded-lg p-4 sm:p-6 shadow-lg text-center"
+            className="bg-gray-800 rounded-lg p-4 sm:p-6 shadow-lg　mb-4 text-center"
           >
             <div className="flex justify-center items-center mb-4 h-40">
               <motion.div
@@ -169,13 +218,13 @@ export default function Home() {
                   scale: [1, 1.5, 1],
                 }}
                 transition={{
-                  repeat: Infinity,
                   duration: 1,
+                  repeat: Infinity,
                   ease: "linear",
                   delay: 0,
                 }}
                 className="w-20 h-20 bg-blue-500 rounded-full"
-              />
+              ></motion.div>
             </div>
 
             <p className="text-center text-gray-400 font-medium mb-2">
@@ -210,7 +259,7 @@ export default function Home() {
                           }}
                           className="w-10 h-10 rounded-full 
                       flex items-center justify-center text-white
-                       font-bold text-lg bg-blue-500"
+                       font-bold text-lg bg-blue-500　 ${getBackgroundColor(num)}"
                         >
                           {num}
                         </motion.div>
@@ -231,7 +280,9 @@ export default function Home() {
                       className="w-10 h-10 rounded-full flex 
                       items-center justify-center 
                       text-white font-bold text-lg
-                       bg-red-500"
+                       bg-red-500
+                       ${getBackgroundColor(numberSet[6])}
+                       "
                     >
                       {numberSet[6]}
                     </motion.div>
