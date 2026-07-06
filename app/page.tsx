@@ -4,10 +4,7 @@ import { useState } from "react";
 
 export default function Home() {
   const [count, setCount] = useState(1);
-  const [numbers, setNumbers] = useState<number[][]>([
-    [9, 11, 17, 22, 30, 32, 36],
-    [1, 10, 32, 25, 11, 4, 22],
-  ]);
+  const [numbers, setNumbers] = useState<number[][]>([]);
   const [isAnimating, setIsAnimating] = useState(false);
   const [loadingPhrase, setLoadingPhrase] = useState(
     "Generating lotto numbers(로또번호 생성중)...",
@@ -16,20 +13,27 @@ export default function Home() {
 
   const generateLottoNumbers = () => {
     // console.log("Generating lotto numbers(로또번호 생성중)...");
-    // setIsAnimating(true);
+    setIsAnimating(true);
 
-    const newNumbers = [];
+    const animationDuration = Math.random() * 2000 + 1000;
+    // 1초 ~ 3초 사이의 랜덤 애니메이션 지속 시간
 
-    for (let i = 0; i < count; i++) {
-      const set = new Set<number>();
-      while (set.size < 7) {
-        // const randomNum = Math.floor(Math.random() * 45) + 1;
-        // lottoSet.add(randomNum);
-        set.add(Math.floor(Math.random() * 45) + 1);
+    setTimeout(() => {
+      const newNumbers = [];
+
+      for (let i = 0; i < count; i++) {
+        const set = new Set<number>();
+        while (set.size < 7) {
+          // const randomNum = Math.floor(Math.random() * 45) + 1;
+          // lottoSet.add(randomNum);
+          set.add(Math.floor(Math.random() * 45) + 1);
+        }
+        newNumbers.push(Array.from(set).sort((a, b) => a - b));
       }
-      newNumbers.push(Array.from(set).sort((a, b) => a - b));
-    }
-    setNumbers(newNumbers);
+      setNumbers(newNumbers);
+
+      setIsAnimating(false);
+    }, animationDuration);
   };
 
   return (
@@ -43,7 +47,8 @@ export default function Home() {
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="text-2xl sm:text-4xl font-bold text-gray-100 mb-4 sm:mb-8 text-center"
+        className="text-2xl sm:text-4xl font-bold
+        text-gray-100 mb-4 sm:mb-8 text-center"
       >
         Lotto Number Generator(로또 번호 생성기)
       </motion.h1>
@@ -53,7 +58,8 @@ export default function Home() {
         initial={{ opacity: 0, scale: 0.5 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5 }}
-        className="bg-gray-800 rounded-lg p-4 sm:p-6 shadow-lg mb-4 sm:mb-8 w-full max-w-md"
+        className="bg-gray-800 rounded-lg p-4 sm:p-6 shadow-lg 
+        mb-4 sm:mb-8 w-full max-w-md"
       >
         <label className="block text-gray-300 text-sm font-bold mb-2">
           Lotto Number of Sets(생성할 로또 번호 세트 수):
@@ -91,7 +97,7 @@ export default function Home() {
             transition={{ duration: 0.5 }}
             className="bg-gray-800 rounded-lg p-4 sm:p-6 shadow-lg text-center"
           >
-            <div className="flex justify-center mb-4 h-40">
+            <div className="flex justify-center items-center mb-4 h-40">
               <motion.div
                 animate={{
                   rotate: [0, 360],
